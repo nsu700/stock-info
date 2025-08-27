@@ -1,6 +1,7 @@
 package home.kdkd.stock.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,5 +34,5 @@ public class StockPriceEntity {
     private Long timestamp;
     @ManyToOne
     @JoinColumn(name="symbol", nullable=false)
-    private StockEntity stockEntity;
+    private StockInfoEntity stockEntity;
 }

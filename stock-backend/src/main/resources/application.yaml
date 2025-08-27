@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    # PostgreSQL
+    url: jdbc:postgresql://localhost:37113/stock
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      # create and drop table, good for testing, production set to none or comment it
+      ddl-auto: none
+
+conf:
+  protocol: "https"
+  key: "d2m4jqhr01qgtft74qp0d2m4jqhr01qgtft74qpg"
+  finnhub:
+    host: "finnhub.io/api/v1"
+    endpoints:
+      quote: "/quote"
+      profle: "/stock/profile2"

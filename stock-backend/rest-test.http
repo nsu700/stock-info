@@ -1,2 +1,2 @@
 ## Get stock
-GET http://localhost:8080/quote?symbol=AAPL
+GET http://localhost:8080/heatmap
