@@ -3,3 +3,4 @@ lxml
 sqlalchemy
 psycopg2-binary
 numpy
+requests
