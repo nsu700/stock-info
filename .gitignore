@@ -1,0 +1,16 @@
+stock-backend/src/main/resources/application.yml
+stock-backend/target/
+stock-backend/.mvn/wrapper/maven-wrapper.jar
+stock-backend/!**/src/main/**/target/
+stock-backend/!**/src/test/**/target/
+### STS ###
+stock-backend/.apt_generated
+stock-backend/.classpath
+stock-backend/.factorypath
+stock-backend/.project
+stock-backend/.settings
+stock-backend/.springBeans
+stock-backend/.sts4-cache
+### VS Code ###
+.vscode/
+stock-backend/.odo
