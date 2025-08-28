@@ -1,4 +1,4 @@
-stock-backend/src/main/resources/application.yml
+stock-backend/src/main/resources/application.yaml
 stock-backend/target/
 stock-backend/.mvn/wrapper/maven-wrapper.jar
 stock-backend/!**/src/main/**/target/
