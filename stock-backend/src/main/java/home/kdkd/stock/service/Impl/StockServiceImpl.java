@@ -71,8 +71,6 @@ public class StockServiceImpl implements StockService{
     }
 
   public List<StockInfoEntity> getSymbolList() {
-    // System.out.println(this.stockInfoRepository.getSymbols());
-    // return List.of("AAPL", "MMM", "AOS", "ABT");
     return this.stockInfoRepository.findAll();
   }
 
@@ -80,8 +78,13 @@ public class StockServiceImpl implements StockService{
     List<ProfileDTO> profileDTOs = new ArrayList<>();
     for(StockInfoEntity symbol : this.getSymbolList()) {
       ProfileDTO profileDTO = this.getStockProfile(symbol.getSymbol());
-      profileDTOs.add(profileDTO);
       System.out.println(profileDTO.getSymbol());
+      profileDTOs.add(profileDTO);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
     return profileDTOs;
   }
@@ -90,8 +93,13 @@ public class StockServiceImpl implements StockService{
     List<QuoteDTO> quoteDtos = new ArrayList<>();
     for(StockInfoEntity symbol : this.getSymbolList()) {
       QuoteDTO quoteDto = this.getStockQuote(symbol.getSymbol());
-      quoteDtos.add(quoteDto);
       System.out.println(quoteDto.getPrice());
+      quoteDtos.add(quoteDto);
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
     return quoteDtos;
   }
