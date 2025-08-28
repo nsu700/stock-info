@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,35 +13,36 @@ import org.springframework.web.util.UriComponentsBuilder;
 import home.kdkd.stock.dto.HeatMapDTO;
 import home.kdkd.stock.dto.ProfileDTO;
 import home.kdkd.stock.dto.QuoteDTO;
-import home.kdkd.stock.entity.StockInfoEntity;
 import home.kdkd.stock.repository.StockInfoRepository;
 import home.kdkd.stock.service.StockService;
 
 
 @Service
+@PropertySource("classpath:application.yaml")
 public class StockServiceImpl implements StockService{
     @Autowired
     private StockInfoRepository stockInfoRepository;
-    // @Value("${conf.finnhub.host}")
-    // private String host;
 
-    // @Value("${conf.protocol}")
-    // private String protocol; 
+    @Value("${conf.finnhub.host}")
+    private String host;
 
-    // @Value("${conf.key}")
-    // private String key;
+    @Value("${conf.protocol}")
+    private String protocol; 
 
-    // @Value("${conf.finnhub.endpoints.quote}")
-    // private String quoteEndpoint;
+    @Value("${conf.key}")
+    private String key;
 
-    // @Value("${conf.finnhub.endpoints.profile}")
-    // private String profileEndpoint;
+    @Value("${conf.finnhub.endpoints.quote}")
+    private String quoteEndpoint;
 
-    final private String host = "finnhub.io/api/v1";
-    final private String protocol = "https";
-    final private String quoteEndpoint = "/quote";
-    final private String profileEndpoint = "/stock/profile2";
-    final private String key = "d2m4jqhr01qgtft74qp0d2m4jqhr01qgtft74qpg";
+    @Value("${conf.finnhub.endpoints.profile}")
+    private String profileEndpoint;
+
+    // final private String host = "finnhub.io/api/v1";
+    // final private String protocol = "https";
+    // final private String quoteEndpoint = "/quote";
+    // final private String profileEndpoint = "/stock/profile2";
+    // final private String key = "d2m4jqhr01qgtft74qp0d2m4jqhr01qgtft74qpg";
 
     final private String quoteQueryParam = "symbol";
     final private String tokenQueryParam = "token";
@@ -70,36 +73,27 @@ public class StockServiceImpl implements StockService{
         return quoteDTO;
     }
 
-  public List<StockInfoEntity> getSymbolList() {
-    return this.stockInfoRepository.findAll();
+  public List<String> getSymbolList() {
+    return List.of("AAPL", "NVDA", "MSFT");
+    // return this.stockInfoRepository.findAll();
   }
 
   public List<ProfileDTO> getStockProfiles() {
     List<ProfileDTO> profileDTOs = new ArrayList<>();
-    for(StockInfoEntity symbol : this.getSymbolList()) {
-      ProfileDTO profileDTO = this.getStockProfile(symbol.getSymbol());
+    for(String symbol : this.getSymbolList()) {
+      ProfileDTO profileDTO = this.getStockProfile(symbol);
       System.out.println(profileDTO.getSymbol());
       profileDTOs.add(profileDTO);
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
     }
     return profileDTOs;
   }
 
   public List<QuoteDTO> getStockQuotes() {
     List<QuoteDTO> quoteDtos = new ArrayList<>();
-    for(StockInfoEntity symbol : this.getSymbolList()) {
-      QuoteDTO quoteDto = this.getStockQuote(symbol.getSymbol());
+    for(String symbol : this.getSymbolList()) {
+      QuoteDTO quoteDto = this.getStockQuote(symbol);
       System.out.println(quoteDto.getPrice());
       quoteDtos.add(quoteDto);
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
     }
     return quoteDtos;
   }

@@ -16,4 +16,4 @@ conf:
     host: "finnhub.io/api/v1"
     endpoints:
       quote: "/quote"
-      profle: "/stock/profile2"
+      profile: "/stock/profile2"
