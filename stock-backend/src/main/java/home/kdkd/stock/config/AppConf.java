@@ -19,4 +19,7 @@ public class AppConf {
 
     @Value("${conf.finnhub.endpoints.profile}")
     private String profileEndpoint;
+
+    @Value("${conf.cors.allowed-origins}")
+    private String[] allowedOrigins;
 }

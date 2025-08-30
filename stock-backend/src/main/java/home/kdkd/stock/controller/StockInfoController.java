@@ -10,6 +10,6 @@ import home.kdkd.stock.dto.HeatMapDTO;
 
 @Controller
 public interface StockInfoController {
-    @GetMapping("/heatmap")
+    @GetMapping("/api/stocks/heatmap-data")
     List<HeatMapDTO> generateData();
 }
