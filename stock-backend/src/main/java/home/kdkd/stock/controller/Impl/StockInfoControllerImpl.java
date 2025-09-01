@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import home.kdkd.stock.controller.StockInfoController;
 import home.kdkd.stock.dto.HeatMapDTO;
-import home.kdkd.stock.service.StockService;
+import home.kdkd.stock.service.HeatMapService;
 
 
 @RestController
 public class StockInfoControllerImpl implements StockInfoController{
     @Autowired
-    private StockService stockService;
+    private HeatMapService heatMapService;
 
     @Override
     public List<HeatMapDTO> generateData() {
-        return this.stockService.generateData();
+        return this.heatMapService.generateData();
     }
 }

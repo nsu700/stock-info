@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import home.kdkd.stock.dto.HeatMapDTO;
 import home.kdkd.stock.dto.ProfileDTO;
 import home.kdkd.stock.dto.QuoteDTO;
 import home.kdkd.stock.repository.StockInfoRepository;
+import home.kdkd.stock.service.FinnHubHelperService;
 import home.kdkd.stock.service.StockService;
 
 
@@ -23,94 +20,35 @@ public class StockServiceImpl implements StockService{
     @Autowired
     private StockInfoRepository stockInfoRepository;
 
-    @Value("${conf.finnhub.host}")
-    private String host;
+    @Autowired
+    private FinnHubHelperService  finnHubHelperService;
 
-    @Value("${conf.protocol}")
-    private String protocol; 
-
-    @Value("${conf.key}")
-    private String key;
-
-    @Value("${conf.finnhub.endpoints.quote}")
-    private String quoteEndpoint;
-
-    @Value("${conf.finnhub.endpoints.profile}")
-    private String profileEndpoint;
-
-    // final private String host = "finnhub.io/api/v1";
-    // final private String protocol = "https";
-    // final private String quoteEndpoint = "/quote";
-    // final private String profileEndpoint = "/stock/profile2";
-    // final private String key = "d2m4jqhr01qgtft74qp0d2m4jqhr01qgtft74qpg";
-
-    final private String quoteQueryParam = "symbol";
-    final private String tokenQueryParam = "token";
-
-    public ProfileDTO getStockProfile(String symbol) {
-        String url = UriComponentsBuilder.newInstance()
-            .scheme(protocol)
-            .host(host)
-            .path(profileEndpoint)
-            .queryParam(quoteQueryParam, symbol)
-            .queryParam(tokenQueryParam, key)
-            .build()
-            .toString();
-        ProfileDTO profileDTO = new RestTemplate().getForObject(url, ProfileDTO.class);
-        return profileDTO;
+    public List<String> getSymbolList() {
+        return List.of("AAPL", "NVDA", "MSFT", "TSLA", "AMZN", "LLY", "JPM", "WMT", "PLTR", "CRM", "IBM", "XOM", "ABT");
+        // return this.stockInfoRepository.findAll();
     }
 
-    public QuoteDTO getStockQuote(String symbol) {
-        String url = UriComponentsBuilder.newInstance()
-            .scheme(protocol)
-            .host(host)
-            .path(quoteEndpoint)
-            .queryParam(quoteQueryParam, symbol)
-            .queryParam(tokenQueryParam, key)
-            .build()
-            .toString();
-        QuoteDTO quoteDTO = new RestTemplate().getForObject(url, QuoteDTO.class);
-        return quoteDTO;
+    @Override
+    public List<ProfileDTO> getStockProfiles() {
+        List<ProfileDTO> profileDTOs = new ArrayList<>();
+        for(String symbol : this.getSymbolList()) {
+          ProfileDTO profileDTO = this.finnHubHelperService.getStockProfile(symbol);
+          System.out.println(profileDTO.getSymbol());
+          profileDTOs.add(profileDTO);
+        }
+        return profileDTOs;
     }
 
-  public List<String> getSymbolList() {
-    return List.of("AAPL", "NVDA", "MSFT", "TSLA", "AMZN", "LLY", "JPM", "WMT", "PLTR", "CRM", "IBM", "XOM", "ABT");
-    // return this.stockInfoRepository.findAll();
-  }
-
-  public List<ProfileDTO> getStockProfiles() {
-    List<ProfileDTO> profileDTOs = new ArrayList<>();
-    for(String symbol : this.getSymbolList()) {
-      ProfileDTO profileDTO = this.getStockProfile(symbol);
-      System.out.println(profileDTO.getSymbol());
-      profileDTOs.add(profileDTO);
+    @Override
+    public List<QuoteDTO> getStockQuotes() {
+        List<QuoteDTO> quoteDtos = new ArrayList<>();
+        for(String symbol : this.getSymbolList()) {
+          QuoteDTO quoteDto = this.finnHubHelperService.getStockQuote(symbol);
+          System.out.println(quoteDto.getPrice());
+          quoteDtos.add(quoteDto);
+        }
+        return quoteDtos;
     }
-    return profileDTOs;
-  }
 
-  public List<QuoteDTO> getStockQuotes() {
-    List<QuoteDTO> quoteDtos = new ArrayList<>();
-    for(String symbol : this.getSymbolList()) {
-      QuoteDTO quoteDto = this.getStockQuote(symbol);
-      System.out.println(quoteDto.getPrice());
-      quoteDtos.add(quoteDto);
-    }
-    return quoteDtos;
-  }
 
-  @Override
-  public List<HeatMapDTO> generateData() {
-    List<QuoteDTO> quoteDTOs = this.getStockQuotes();
-    List<ProfileDTO> profileDTOs = this.getStockProfiles();
-    List<HeatMapDTO> heatMapDTOs = new ArrayList<>();
-    for (int i = 0; i < quoteDTOs.size(); i++) {
-        heatMapDTOs.add(HeatMapDTO.builder()
-          .industry(profileDTOs.get(i).getIndustry())
-          .marketCapitalization(profileDTOs.get(i).getMarketCapitalization())
-          .priceChangePercentage(quoteDTOs.get(i).getPercentChange())
-          .symbol(profileDTOs.get(i).getSymbol())
-          .build());
-    }
-    return heatMapDTOs;
-  }
 }
