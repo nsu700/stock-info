@@ -74,7 +74,7 @@ public class StockServiceImpl implements StockService{
     }
 
   public List<String> getSymbolList() {
-    return List.of("AAPL", "NVDA", "MSFT");
+    return List.of("AAPL", "NVDA", "MSFT", "TSLA", "AMZN", "LLY", "JPM", "WMT", "PLTR", "CRM", "IBM", "XOM", "ABT");
     // return this.stockInfoRepository.findAll();
   }
 

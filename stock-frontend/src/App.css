@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+.heatmap-container {
+  width: 100vw; /* 100% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+}
+
+/* Ensure the SVG element fills its container */
+.heatmap-container svg {
+  width: 100%;
+  height: 100%;
+}
