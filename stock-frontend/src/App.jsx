@@ -1,13 +1,20 @@
-import './App.css'
-import Heatmap from './components/Heatmap' // Import the component
+import { Routes, Route } from 'react-router-dom';
+import Heatmap from './components/Heatmap';
+import StockDetail from './components/StockDetail';
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <h1>Stock Market Heatmap</h1>
-      <Heatmap /> {/* Use the component here */}
+    <div className="App">
+      <Routes>
+        {/* Route for the main heatmap page */}
+        <Route path="/" element={<Heatmap />} />
+        
+        {/* Route for the stock detail page with a dynamic symbol */}
+        <Route path="/stock/:symbol" element={<StockDetail />} />
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
