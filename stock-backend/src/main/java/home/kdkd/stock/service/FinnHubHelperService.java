@@ -1,9 +1,9 @@
 package home.kdkd.stock.service;
 
-import home.kdkd.stock.dto.ProfileDTO;
-import home.kdkd.stock.dto.QuoteDTO;
+import home.kdkd.stock.dto.FinnhubProfileDTO;
+import home.kdkd.stock.dto.FinnhubQuoteDTO;
 
 public interface FinnHubHelperService {
-    ProfileDTO getStockProfile(String symbol);
-    QuoteDTO getStockQuote(String symbol);
+    FinnhubProfileDTO getStockProfile(String symbol);
+    FinnhubQuoteDTO getStockQuote(String symbol);
 }

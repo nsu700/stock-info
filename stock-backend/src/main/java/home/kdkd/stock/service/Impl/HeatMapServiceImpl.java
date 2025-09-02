@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import home.kdkd.stock.dto.HeatMapDTO;
-import home.kdkd.stock.dto.ProfileDTO;
-import home.kdkd.stock.dto.QuoteDTO;
+import home.kdkd.stock.dto.FinnhubProfileDTO;
+import home.kdkd.stock.dto.FinnhubQuoteDTO;
 import home.kdkd.stock.service.HeatMapService;
 import home.kdkd.stock.service.StockService;
 
@@ -20,8 +20,8 @@ public class HeatMapServiceImpl implements HeatMapService{
 
     @Override
     public List<HeatMapDTO> generateData() {
-        List<QuoteDTO> quoteDTOs = this.stockService.getStockQuotes();
-        List<ProfileDTO> profileDTOs = this.stockService.getStockProfiles();
+        List<FinnhubQuoteDTO> quoteDTOs = this.stockService.getStockQuotes();
+        List<FinnhubProfileDTO> profileDTOs = this.stockService.getStockProfiles();
         List<HeatMapDTO> heatMapDTOs = new ArrayList<>();
         for (int i = 0; i < quoteDTOs.size(); i++) {
             heatMapDTOs.add(HeatMapDTO.builder()

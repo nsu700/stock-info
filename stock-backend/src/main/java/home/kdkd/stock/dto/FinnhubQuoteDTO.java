@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfileDTO {
-  @JsonProperty("finnhubIndustry")
-  private String industry;
-  private Double marketCapitalization;
-  @JsonProperty("ticker")
-  private String symbol;
+public class FinnhubQuoteDTO {
+    @JsonProperty("c")
+    private Double price;
+    @JsonProperty("dp")
+    private Double percentChange;
 }

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConf {
     @Value("${conf.finnhub.host}")
-    private String host;
+    private String finnhubHost;
 
     @Value("${conf.protocol}")
     private String protocol; 
@@ -22,4 +22,7 @@ public class AppConf {
 
     @Value("${conf.cors.allowed-origins}")
     private String[] allowedOrigins;
+
+    @Value("${conf.yahoo.host}")
+    private String yahooHost;
 }

@@ -1,5 +1,7 @@
 package home.kdkd.stock.controller.Impl;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import home.kdkd.stock.controller.StockInfoController;
 import home.kdkd.stock.dto.HeatMapDTO;
 import home.kdkd.stock.service.HeatMapService;
+import home.kdkd.stock.service.YahooHelperService;
 
 
 @RestController
@@ -15,8 +18,20 @@ public class StockInfoControllerImpl implements StockInfoController{
     @Autowired
     private HeatMapService heatMapService;
 
+    @Autowired
+    private YahooHelperService yahooHelperService;
+
     @Override
     public List<HeatMapDTO> generateData() {
         return this.heatMapService.generateData();
+    }
+
+    @Override
+    public void saveOHLC(String symbol, int days) {
+        Instant now = Instant.now();
+        long period2 = now.getEpochSecond();
+        Instant ago = now.minus(days, ChronoUnit.DAYS);
+        long period1 = ago.getEpochSecond();
+        this.yahooHelperService.processAndSaveYahooData(symbol, period1, period2);
     }
 }

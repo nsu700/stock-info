@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import home.kdkd.stock.dto.ProfileDTO;
-import home.kdkd.stock.dto.QuoteDTO;
+import home.kdkd.stock.dto.FinnhubProfileDTO;
+import home.kdkd.stock.dto.FinnhubQuoteDTO;
 import home.kdkd.stock.repository.StockInfoRepository;
 import home.kdkd.stock.service.FinnHubHelperService;
 import home.kdkd.stock.service.StockService;
 
 
 @Service
-@PropertySource("classpath:application.yaml")
 public class StockServiceImpl implements StockService{
     @Autowired
     private StockInfoRepository stockInfoRepository;
@@ -29,10 +27,10 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public List<ProfileDTO> getStockProfiles() {
-        List<ProfileDTO> profileDTOs = new ArrayList<>();
+    public List<FinnhubProfileDTO> getStockProfiles() {
+        List<FinnhubProfileDTO> profileDTOs = new ArrayList<>();
         for(String symbol : this.getSymbolList()) {
-          ProfileDTO profileDTO = this.finnHubHelperService.getStockProfile(symbol);
+          FinnhubProfileDTO profileDTO = this.finnHubHelperService.getStockProfile(symbol);
           System.out.println(profileDTO.getSymbol());
           profileDTOs.add(profileDTO);
         }
@@ -40,10 +38,10 @@ public class StockServiceImpl implements StockService{
     }
 
     @Override
-    public List<QuoteDTO> getStockQuotes() {
-        List<QuoteDTO> quoteDtos = new ArrayList<>();
+    public List<FinnhubQuoteDTO> getStockQuotes() {
+        List<FinnhubQuoteDTO> quoteDtos = new ArrayList<>();
         for(String symbol : this.getSymbolList()) {
-          QuoteDTO quoteDto = this.finnHubHelperService.getStockQuote(symbol);
+          FinnhubQuoteDTO quoteDto = this.finnHubHelperService.getStockQuote(symbol);
           System.out.println(quoteDto.getPrice());
           quoteDtos.add(quoteDto);
         }

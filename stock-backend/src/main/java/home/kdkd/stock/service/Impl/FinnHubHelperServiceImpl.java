@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import home.kdkd.stock.dto.ProfileDTO;
-import home.kdkd.stock.dto.QuoteDTO;
+import home.kdkd.stock.dto.FinnhubProfileDTO;
+import home.kdkd.stock.dto.FinnhubQuoteDTO;
 import home.kdkd.stock.service.FinnHubHelperService;
 
 @Service
@@ -31,7 +31,7 @@ public class FinnHubHelperServiceImpl implements FinnHubHelperService{
     final private String tokenQueryParam = "token";
     
     @Override
-    public ProfileDTO getStockProfile(String symbol) {
+    public FinnhubProfileDTO getStockProfile(String symbol) {
         String url = UriComponentsBuilder.newInstance()
             .scheme(protocol)
             .host(host)
@@ -40,12 +40,12 @@ public class FinnHubHelperServiceImpl implements FinnHubHelperService{
             .queryParam(tokenQueryParam, key)
             .build()
             .toString();
-        ProfileDTO profileDTO = new RestTemplate().getForObject(url, ProfileDTO.class);
+        FinnhubProfileDTO profileDTO = new RestTemplate().getForObject(url, FinnhubProfileDTO.class);
         return profileDTO;
     }
 
     @Override
-    public QuoteDTO getStockQuote(String symbol) {
+    public FinnhubQuoteDTO getStockQuote(String symbol) {
         String url = UriComponentsBuilder.newInstance()
             .scheme(protocol)
             .host(host)
@@ -54,7 +54,7 @@ public class FinnHubHelperServiceImpl implements FinnHubHelperService{
             .queryParam(tokenQueryParam, key)
             .build()
             .toString();
-        QuoteDTO quoteDTO = new RestTemplate().getForObject(url, QuoteDTO.class);
+        FinnhubQuoteDTO quoteDTO = new RestTemplate().getForObject(url, FinnhubQuoteDTO.class);
         return quoteDTO;
     }
 }

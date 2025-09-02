@@ -2,10 +2,10 @@ package home.kdkd.stock.service;
 
 import java.util.List;
 
-import home.kdkd.stock.dto.ProfileDTO;
-import home.kdkd.stock.dto.QuoteDTO;
+import home.kdkd.stock.dto.FinnhubProfileDTO;
+import home.kdkd.stock.dto.FinnhubQuoteDTO;
 
 public interface StockService {
-    List<ProfileDTO> getStockProfiles();
-    List<QuoteDTO> getStockQuotes();
+    List<FinnhubProfileDTO> getStockProfiles();
+    List<FinnhubQuoteDTO> getStockQuotes();
 }
