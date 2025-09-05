@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import home.kdkd.stock.controller.StockInfoController;
 import home.kdkd.stock.dto.HeatMapDTO;
+import home.kdkd.stock.entity.StockOHLCEntity;
 import home.kdkd.stock.service.HeatMapService;
+import home.kdkd.stock.service.StockService;
 import home.kdkd.stock.service.YahooHelperService;
 
 
@@ -20,6 +22,9 @@ public class StockInfoControllerImpl implements StockInfoController{
 
     @Autowired
     private YahooHelperService yahooHelperService;
+
+    @Autowired
+    private StockService stockService;
 
     @Override
     public List<HeatMapDTO> generateData() {
@@ -33,5 +38,10 @@ public class StockInfoControllerImpl implements StockInfoController{
         Instant ago = now.minus(days, ChronoUnit.DAYS);
         long period1 = ago.getEpochSecond();
         this.yahooHelperService.processAndSaveYahooData(symbol, period1, period2);
+    }
+
+    @Override
+    public List<StockOHLCEntity> getOHLCData(String symbol) {
+        return this.stockService.getStockDetails(symbol);
     }
 }

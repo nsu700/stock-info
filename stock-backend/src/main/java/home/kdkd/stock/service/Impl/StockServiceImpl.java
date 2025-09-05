@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import home.kdkd.stock.dto.FinnhubProfileDTO;
 import home.kdkd.stock.dto.FinnhubQuoteDTO;
+import home.kdkd.stock.entity.StockOHLCEntity;
 import home.kdkd.stock.repository.StockInfoRepository;
+import home.kdkd.stock.repository.StockOHLCRepository;
 import home.kdkd.stock.service.FinnHubHelperService;
 import home.kdkd.stock.service.StockService;
 
@@ -17,6 +19,9 @@ import home.kdkd.stock.service.StockService;
 public class StockServiceImpl implements StockService{
     @Autowired
     private StockInfoRepository stockInfoRepository;
+
+    @Autowired
+    private StockOHLCRepository stockOHLCRepository;
 
     @Autowired
     private FinnHubHelperService  finnHubHelperService;
@@ -48,5 +53,8 @@ public class StockServiceImpl implements StockService{
         return quoteDtos;
     }
 
-
+    @Override
+    public List<StockOHLCEntity> getStockDetails(String symbol) {
+      return this.stockOHLCRepository.findBySymbol(symbol);
+    }
 }

@@ -29,3 +29,22 @@ docker run --rm \
   -e DB_NAME=stock_db \
   stock-scraper
 ```
+
+### Table structure
+
+#### stock_ohlc_data
+
+```
+CREATE TABLE stock_ohlc_data (
+    id SERIAL PRIMARY KEY,
+    symbol VARCHAR(10) NOT NULL,
+    timestamp_utc TIMESTAMP WITH TIME ZONE NOT NULL,
+    open_price DECIMAL(19, 4),
+    high_price DECIMAL(19, 4),
+    low_price DECIMAL(19, 4),
+    close_price DECIMAL(19, 4),
+    adj_close_price DECIMAL(19, 4),
+    volume BIGINT,
+    CONSTRAINT unique_ohlc_record UNIQUE (symbol, timestamp_utc)
+);
+```

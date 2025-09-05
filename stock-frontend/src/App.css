@@ -1,52 +1,13 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.App {
+  width: 100%;
+  height: 100%;
+  display: flex; /* Use flexbox for a robust layout */
 }
 
 .heatmap-container {
-  width: 100vw; /* 100% of the viewport width */
-  height: 100vh; /* 100% of the viewport height */
+  flex-grow: 1; /* This makes the container expand to fill all available space */
 }
 
-/* Ensure the SVG element fills its container */
 .heatmap-container svg {
   width: 100%;
   height: 100%;
@@ -65,4 +26,15 @@
 
 .back-button:hover {
   background-color: #555;
+}
+
+.stock-detail-page {
+  padding: 2rem;
+  color: white;
+}
+
+.chart-container {
+  width: 90%; /* Use 90% of the page width */
+  max-width: 1400px; /* Set a max width for very large screens */
+  margin: 2rem auto; /* Center the chart on the page */
 }

@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom'; // 1. Import Link
+import CandlestickChart from './CandlestickChart';
 
 function StockDetail() {
   const { symbol } = useParams();
@@ -11,7 +12,7 @@ function StockDetail() {
       </Link>
       
       <h1>Details for {symbol}</h1>
-      {/* You will fetch and display the stock history data here */}
+      <CandlestickChart symbol={symbol} />
     </div>
   );
 }

@@ -27,7 +27,7 @@ WORKDIR /app
 COPY --from=builder /opt/venv /opt/venv
 
 # Copy your Python script into the image
-COPY stock_init.py .
+COPY stock_init.py stock_ohlc_data.py .
 
 # Activate the virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
