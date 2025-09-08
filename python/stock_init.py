@@ -34,6 +34,10 @@ df.rename(columns={'security': 'name', 'gics_sector': 'sector'}, inplace=True)
 # Append id as primary key
 df['id'] = np.arange(1, len(df) + 1) # Start id from 1 for convention
 
+## Remove stock that has multiple class shares
+symbols_to_exclude = ['GOOG', 'NWS', "FOX", "UA", "BRK.B"]
+df = df[~df['symbol'].isin(symbols_to_exclude)]
+
 # List all the column names you want to get rid of.
 # Note: Cleaned names might be different, verify with a print statement if needed
 columns_to_drop = ['gics_sub-industry', 'cik', 'founded', 'date_added', 'headquarters_location']
@@ -56,7 +60,7 @@ db_name = os.getenv('DB_NAME', 'stock')
 engine = create_engine(f'postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}')
 
 # --- 4. Write the DataFrame to the PostgreSQL database ---
-table_name = 'stock_info'
+table_name = 'stock'
 df.to_sql(table_name, engine, if_exists='replace', index=False)
 
 print(f"Successfully wrote {len(df)} records to the '{table_name}' table in the '{db_name}' database.")

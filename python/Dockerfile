@@ -33,4 +33,4 @@ COPY stock_init.py stock_ohlc_data.py .
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Set the command to run your script
-CMD ["python", "stock_init.py"]
+CMD ["python", "-u", "stock_init.py"]

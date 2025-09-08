@@ -19,10 +19,10 @@ def get_db_engine():
         exit(1)
 
 def get_stock_symbols(engine):
-    """Fetches stock symbols from the stock_info table."""
+    """Fetches stock symbols from the stock table."""
     try:
         with engine.connect() as conn:
-            result = conn.execute(text("SELECT symbol FROM stock_info"))
+            result = conn.execute(text("SELECT symbol FROM stock"))
             symbols = [row[0] for row in result]
             return symbols
     except Exception as e:
@@ -62,7 +62,7 @@ def main():
     symbols = get_stock_symbols(engine)
     
     if not symbols:
-        print("No symbols found in stock_info table. Exiting.")
+        print("No symbols found in stock table. Exiting.")
         return
 
     print(f"Found {len(symbols)} symbols. Starting data fetch...")
@@ -82,7 +82,7 @@ def main():
             if timestamps:
                 df = pd.DataFrame({
                     'symbol': symbol,
-                    'timestamp_utc': pd.to_datetime(timestamps, unit='s', utc=True),
+                    'timestamp': pd.to_datetime(timestamps, unit='s', utc=True),
                     'open_price': quote.get('open', []),
                     'high_price': quote.get('high', []),
                     'low_price': quote.get('low', []),
