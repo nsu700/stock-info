@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import home.kdkd.stock.controller.StockInfoController;
 import home.kdkd.stock.dto.HeatMapDTO;
 import home.kdkd.stock.entity.StockOHLCEntity;
+import home.kdkd.stock.entity.StockProfileEntity;
 import home.kdkd.stock.service.HeatMapService;
 import home.kdkd.stock.service.StockService;
 import home.kdkd.stock.service.YahooHelperService;
@@ -43,5 +44,20 @@ public class StockInfoControllerImpl implements StockInfoController{
     @Override
     public List<StockOHLCEntity> getOHLCData(String symbol) {
         return this.stockService.getStockDetails(symbol);
+    }
+
+    @Override
+    public List<StockProfileEntity> updateStockProfiles() {
+        return this.stockService.updateStockProfile();
+    }
+
+    @Override
+    public List<String> getSymbols() {
+        return this.stockService.getSymbolList();
+    }
+
+    @Override
+    public StockOHLCEntity getLastDayOHLC(String stockSymbol) {
+        return this.stockService.getStockLastDayOHLC(stockSymbol);
     }
 }

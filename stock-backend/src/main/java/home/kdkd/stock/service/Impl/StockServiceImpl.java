@@ -6,40 +6,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import home.kdkd.stock.dto.FinnhubProfileDTO;
 import home.kdkd.stock.dto.FinnhubQuoteDTO;
 import home.kdkd.stock.entity.StockOHLCEntity;
-import home.kdkd.stock.repository.StockInfoRepository;
+import home.kdkd.stock.entity.StockProfileEntity;
 import home.kdkd.stock.repository.StockOHLCRepository;
+import home.kdkd.stock.repository.StockProfileRepository;
+import home.kdkd.stock.repository.StockRepository;
 import home.kdkd.stock.service.FinnHubHelperService;
 import home.kdkd.stock.service.StockService;
 
 
 @Service
 public class StockServiceImpl implements StockService{
-    @Autowired
-    private StockInfoRepository stockInfoRepository;
+    // 1. Declare all dependencies as private final fields
+    private final StockProfileRepository stockProfileRepository;
+    private final StockOHLCRepository stockOHLCRepository;
+    private final FinnHubHelperService finnHubHelperService;
+    private final StockRepository stockRepository;
 
+    // 2. Create a single constructor to inject all dependencies
     @Autowired
-    private StockOHLCRepository stockOHLCRepository;
-
-    @Autowired
-    private FinnHubHelperService  finnHubHelperService;
-
-    public List<String> getSymbolList() {
-        return List.of("AAPL", "NVDA", "MSFT", "TSLA", "AMZN", "LLY", "JPM", "WMT", "PLTR", "CRM", "IBM", "XOM", "ABT");
-        // return this.stockInfoRepository.findAll();
+    public StockServiceImpl(
+            StockProfileRepository stockProfileRepository,
+            StockOHLCRepository stockOHLCRepository,
+            FinnHubHelperService finnHubHelperService,
+            StockRepository stockRepository) {
+        this.stockProfileRepository = stockProfileRepository;
+        this.stockOHLCRepository = stockOHLCRepository;
+        this.finnHubHelperService = finnHubHelperService;
+        this.stockRepository = stockRepository;
     }
 
     @Override
-    public List<FinnhubProfileDTO> getStockProfiles() {
-        List<FinnhubProfileDTO> profileDTOs = new ArrayList<>();
-        for(String symbol : this.getSymbolList()) {
-          FinnhubProfileDTO profileDTO = this.finnHubHelperService.getStockProfile(symbol);
-          System.out.println(profileDTO.getSymbol());
-          profileDTOs.add(profileDTO);
-        }
-        return profileDTOs;
+    public List<String> getSymbolList() {
+        return this.stockRepository.getSymbols();
     }
 
     @Override
@@ -56,5 +56,30 @@ public class StockServiceImpl implements StockService{
     @Override
     public List<StockOHLCEntity> getStockDetails(String symbol) {
       return this.stockOHLCRepository.findBySymbol(symbol);
+    }
+
+    @Override
+    public List<StockProfileEntity> updateStockProfile() {
+        List<StockProfileEntity> stockProfileEntitys = new ArrayList<>();
+        int number = 0;
+        for(String symbol : this.getSymbolList()) {
+          System.out.println("Progressing the stock: " + symbol + ", number " + number);
+          StockProfileEntity stockProfileEntity = this.finnHubHelperService.getStockProfile(symbol);
+          System.out.println(stockProfileEntity);
+          stockProfileEntitys.add(stockProfileEntity);
+          try {
+            Thread.sleep(1100);
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+          }
+          number++;
+        }
+
+        return this.stockProfileRepository.saveAll(stockProfileEntitys);
+    }
+
+    @Override
+    public StockOHLCEntity getStockLastDayOHLC(String symbol) {
+      return this.stockOHLCRepository.findTopBySymbolOrderByTimestampDesc(symbol);
     }
 }

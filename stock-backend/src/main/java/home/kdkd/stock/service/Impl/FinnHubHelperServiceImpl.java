@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import home.kdkd.stock.dto.FinnhubProfileDTO;
 import home.kdkd.stock.dto.FinnhubQuoteDTO;
+import home.kdkd.stock.entity.StockProfileEntity;
 import home.kdkd.stock.service.FinnHubHelperService;
 
 @Service
@@ -31,7 +31,7 @@ public class FinnHubHelperServiceImpl implements FinnHubHelperService{
     final private String tokenQueryParam = "token";
     
     @Override
-    public FinnhubProfileDTO getStockProfile(String symbol) {
+    public StockProfileEntity getStockProfile(String symbol) {
         String url = UriComponentsBuilder.newInstance()
             .scheme(protocol)
             .host(host)
@@ -40,8 +40,9 @@ public class FinnHubHelperServiceImpl implements FinnHubHelperService{
             .queryParam(tokenQueryParam, key)
             .build()
             .toString();
-        FinnhubProfileDTO profileDTO = new RestTemplate().getForObject(url, FinnhubProfileDTO.class);
-        return profileDTO;
+        System.out.println(url);
+        StockProfileEntity stockProfileEntity = new RestTemplate().getForObject(url, StockProfileEntity.class);
+        return stockProfileEntity;
     }
 
     @Override

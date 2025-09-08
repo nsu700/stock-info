@@ -3,7 +3,6 @@ package home.kdkd.stock.entity;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +22,6 @@ public class StockOHLCEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String symbol;
-    @Column(name = "timestamp_utc")
     private Instant timestamp; 
     private BigDecimal openPrice;
     private BigDecimal highPrice;

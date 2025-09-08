@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import home.kdkd.stock.dto.HeatMapDTO;
 import home.kdkd.stock.entity.StockOHLCEntity;
+import home.kdkd.stock.entity.StockProfileEntity;
 
 
 @Controller
@@ -20,4 +21,13 @@ public interface StockInfoController {
 
     @GetMapping("/api/stocks/{symbol}/price-history")
     List<StockOHLCEntity> getOHLCData(@PathVariable("symbol") String stockSymbol);
+
+    @GetMapping("/api/stocks/updateProfiles")
+    List<StockProfileEntity> updateStockProfiles();
+
+    @GetMapping("/stock")
+    List<String> getSymbols();
+
+    @GetMapping("/api/stocks/{symbol}/yesterday")
+    StockOHLCEntity getLastDayOHLC(@PathVariable("symbol") String stockSymbol);
 }

@@ -8,4 +8,6 @@ import home.kdkd.stock.entity.StockOHLCEntity;
 
 public interface StockOHLCRepository extends JpaRepository<StockOHLCEntity, Long>{
     List<StockOHLCEntity> findBySymbol(String symbol);
+    StockOHLCEntity findTopBySymbolOrderByTimestampDesc(String symbol);
+    List<StockOHLCEntity> findTop2BySymbolOrderByTimestampDesc(String symbol);
 }

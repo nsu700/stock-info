@@ -8,13 +8,13 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 
 @Entity
-@Table(name = "stock_info")
 @Getter
-public class StockInfoEntity {
+@Table(name = "stock")
+public class StockEntity {
+    private String name;
     private String symbol;
+    private String sector;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String sector;
 }
