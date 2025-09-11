@@ -9,6 +9,6 @@ import home.kdkd.stock.entity.StockProfileEntity;
 
 public interface StockProfileRepository extends JpaRepository<StockProfileEntity, Long>{
   StockProfileEntity findBySymbol(String symbol);
-  @Query("SELECT s.symbol FROM StockProfileEntity s ORDER BY s.marketCapitalization DESC LIMIT 50")
+  @Query("SELECT s.symbol FROM StockProfileEntity s ORDER BY s.marketCapitalization DESC LIMIT 10")
   List<String> findTop50OrderByMarketCapitalization();
 }

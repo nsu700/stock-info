@@ -18,24 +18,33 @@ import home.kdkd.stock.service.StockService;
 
 @Service
 public class StockServiceImpl implements StockService{
-    // 1. Declare all dependencies as private final fields
-    private final StockProfileRepository stockProfileRepository;
-    private final StockOHLCRepository stockOHLCRepository;
-    private final FinnHubHelperService finnHubHelperService;
-    private final StockRepository stockRepository;
+    // private final StockProfileRepository stockProfileRepository;
+    // private final StockOHLCRepository stockOHLCRepository;
+    // private final FinnHubHelperService finnHubHelperService;
+    // private final StockRepository stockRepository;
 
-    // 2. Create a single constructor to inject all dependencies
+    // public StockServiceImpl(
+    //         StockProfileRepository stockProfileRepository,
+    //         StockOHLCRepository stockOHLCRepository,
+    //         FinnHubHelperService finnHubHelperService,
+    //         StockRepository stockRepository) {
+    //     this.stockProfileRepository = stockProfileRepository;
+    //     this.stockOHLCRepository = stockOHLCRepository;
+    //     this.finnHubHelperService = finnHubHelperService;
+    //     this.stockRepository = stockRepository;
+    // }
+
     @Autowired
-    public StockServiceImpl(
-            StockProfileRepository stockProfileRepository,
-            StockOHLCRepository stockOHLCRepository,
-            FinnHubHelperService finnHubHelperService,
-            StockRepository stockRepository) {
-        this.stockProfileRepository = stockProfileRepository;
-        this.stockOHLCRepository = stockOHLCRepository;
-        this.finnHubHelperService = finnHubHelperService;
-        this.stockRepository = stockRepository;
-    }
+    private StockProfileRepository stockProfileRepository;
+
+    @Autowired
+    private StockOHLCRepository stockOHLCRepository;
+
+    @Autowired
+    private FinnHubHelperService finnHubHelperService;
+
+    @Autowired
+    private StockRepository stockRepository;
 
     @Override
     public List<String> getSymbolList() {

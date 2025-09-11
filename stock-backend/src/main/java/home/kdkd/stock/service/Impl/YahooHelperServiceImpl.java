@@ -7,9 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 
 import home.kdkd.stock.dto.YahooQuoteDTO;
 import home.kdkd.stock.dto.YahooResponseDTO;
@@ -41,7 +44,15 @@ public class YahooHelperServiceImpl implements YahooHelperService{
             .buildAndExpand(symbol)
             .toString();
         System.out.println("Querying yahoo api at " + url);
-        YahooResponseDTO yahooResponseDTO = new RestTemplate().getForObject(url, YahooResponseDTO.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        HttpEntity<String> entity = new HttpEntity<>("body", headers);
+
+        YahooResponseDTO yahooResponseDTO = new RestTemplate().exchange(
+            url,
+            HttpMethod.GET,
+            entity,
+            YahooResponseDTO.class).getBody();
         return yahooResponseDTO;
     }
 
